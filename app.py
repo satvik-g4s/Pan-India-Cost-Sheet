@@ -6,30 +6,33 @@ st.set_page_config(layout="wide")
 
 uploaded_file = st.file_uploader("Upload file", type=["xlsx", "xls", "csv"])
 
-if st.button("Run"):
-    if uploaded_file is not None:
+if uploaded_file is not None:
+    if st.button("Run"):
         if uploaded_file.name.endswith(".csv"):
             df = pd.read_csv(uploaded_file)
         else:
             df = pd.read_excel(uploaded_file)
 
-        df2 = df[
-            (
-                df["current_Gratuity"]
-                + df["current_Bonus"]
-                + df["current_Leave"]
-                + df["current_holiday"]
-                + df["Stats_Holiday"]
-                + df["current_Ex_Gratia"]
-            )
-            == 0
-        ]
+        df["key"] = df["locn_no"].astype(str) + df["cust_no"].astype(str)
+        original=df.copy()
+        #df=df[[]]
+        df1 = df[(df["current_Gratuity"])== 0]
+        df2 = df[(df["current_Bonus"])== 0]
+        df3 = df[(df["current_Leave"])== 0]
+        df4 = df[(df["current_holiday"])== 0]
+        df5 = df[( df["Stats_Holiday"])== 0]
+        df6 = df[(df["current_Ex_Gratia"])== 0]
 
         output = io.BytesIO()
 
         with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
-            df.to_excel(writer, sheet_name="YourData", index=False)
-            df2.to_excel(writer, sheet_name="Filtered", index=False)
+            original.to_excel(writer, sheet_name="YourData", index=False)
+            df1.to_excel(writer, sheet_name="current_Gratuity", index=False)
+            df2.to_excel(writer, sheet_name="current_Bonus", index=False)
+            df3.to_excel(writer, sheet_name="current_Leave", index=False)
+            df4.to_excel(writer, sheet_name="current_holiday", index=False)
+            df5.to_excel(writer, sheet_name="Stats_Holiday", index=False)
+            df6.to_excel(writer, sheet_name="current_Ex_Gratia", index=False)
 
         output.seek(0)
 
