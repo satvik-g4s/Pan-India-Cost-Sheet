@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import io
 
 st.set_page_config(layout="wide")
 
@@ -24,12 +25,19 @@ if st.button("Run"):
             == 0
         ]
 
-        output_path = "output.xlsx"
+        output = io.BytesIO()
 
-        with pd.ExcelWriter(output_path) as writer:
+        with pd.ExcelWriter(output, engine="xlsxwriter") as writer:
             df.to_excel(writer, sheet_name="YourData", index=False)
             df2.to_excel(writer, sheet_name="Filtered", index=False)
 
-        st.dataframe(df2)
+        output.seek(0)
+
+        st.download_button(
+            label="Download Output",
+            data=output,
+            file_name="output.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
     else:
-        st.warning("Please upload a file.")```
+        st.warning("Please upload a file.")
