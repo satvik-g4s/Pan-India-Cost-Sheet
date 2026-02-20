@@ -9,9 +9,9 @@ uploaded_file = st.file_uploader("Upload file", type=["xlsx", "xls", "csv"], use
 if uploaded_file is not None:
     if st.button("Run"):
         if uploaded_file.name.endswith(".csv"):
-            df = pd.read_csv(uploaded_file)
+            df = pd.read_csv(uploaded_file, usecols=["hub",	"locn_no",	"cust_no",	"cust_name",	"wage_code",	"std_wage_code",	"position_code",	"assignment_id",	"rank_designation", "current_Gratuity", "current_Bonus", "current_Leave", "current_holiday", "Stats_Holiday", "current_Ex_Gratia"])
         else:
-            df = pd.read_excel(uploaded_file)
+            df = pd.read_excel(uploaded_file, usecols=["hub",	"locn_no",	"cust_no",	"cust_name",	"wage_code",	"std_wage_code",	"position_code",	"assignment_id",	"rank_designation", "current_Gratuity", "current_Bonus", "current_Leave", "current_holiday", "Stats_Holiday", "current_Ex_Gratia"])
 
         df["key"] = df["locn_no"].astype(str) + df["cust_no"].astype(str)
         original=df.copy()
