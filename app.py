@@ -4,7 +4,7 @@ import io
 
 st.set_page_config(layout="wide")
 
-uploaded_file = st.file_uploader("Upload file", type=["xlsx", "xls", "csv"], usecols=["hub",	"locn_no",	"cust_no",	"cust_name",	"wage_code",	"std_wage_code",	"position_code",	"assignment_id",	"rank_designation", "current_Gratuity", "current_Bonus", "current_Leave", "current_holiday", "Stats_Holiday", "current_Ex_Gratia"])
+uploaded_file = st.file_uploader("Upload file", type=["xlsx", "xls", "csv"])
 
 if uploaded_file is not None:
     if st.button("Run"):
