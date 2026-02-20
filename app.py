@@ -15,7 +15,7 @@ if uploaded_file is not None:
 
         df["key"] = df["locn_no"].astype(str) + df["cust_no"].astype(str)
         original=df.copy()
-        #df=df[[]]
+        df=df[["hub",	"locn_no",	"cust_no","key" ,	"cust_name",	"wage_code",	"std_wage_code",	"position_code",	"assignment_id",	"rank_designation", "current_Gratuity", "current_Bonus", "current_Leave", "current_holiday", "Stats_Holiday", "current_Ex_Gratia"]]
         df1 = df[(df["current_Gratuity"])== 0]
         df2 = df[(df["current_Bonus"])== 0]
         df3 = df[(df["current_Leave"])== 0]
